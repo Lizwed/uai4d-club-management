@@ -48,7 +48,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 bash
 
-git clone https://github.com/YOUR_USERNAME/UAI4DClub.git
+git clone https://github.com/Lizwed/uai4d-club-management
 cd UAI4DClub
 
 Use code with caution.
