@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAI4D Club - Projects</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- ===== Shared Navigation & Footer CSS ===== -->
+    <link rel="stylesheet" href="css/navigation-footer.css">
+    
+    <style>
+        :root {
+            --primary-dark: #0a1628;
+            --primary-navy: #132044;
+            --primary-blue: #1a2a5e;
+            --gold: #D4AF37;
+            --gold-light: #E8D57A;
+            --gold-dark: #B8960F;
+            --white: #FFFFFF;
+            --light-gray: #f0f2f5;
+            --medium-gray: #e4e7ec;
+            --dark-gray: #6B7280;
+            --text-dark: #111827;
+            --text-gray: #4B5563;
+            --text-light: #9CA3AF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 20px 24px;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+        
+        .page-header h2 {
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .page-header h2 i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+        
+        .page-header .subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            transition: var(--transition);
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            color: #fff;
+        }
+        
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline-gold:hover {
+            background: var(--gold);
+            color: #fff;
+        }
+        
+        .btn-delete {
+            background: #dc2626 !important;
+            color: #fff !important;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn-delete:hover {
+            background: #b91c1c !important;
+            transform: scale(1.05);
+        }
+        
+        .project-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: var(--transition);
+            height: 100%;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .project-card .project-status {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .project-status.active { background: #dbeafe; color: #2563eb; }
+        .project-status.completed { background: #d1fae5; color: #065f46; }
+        .project-status.idea { background: #fef3c7; color: #d97706; }
+        .project-status.paused { background: #fee2e2; color: #dc2626; }
+        
+        .project-card .project-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--gold);
+        }
+        
+        .project-card h5 {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 2px;
+            color: var(--text-dark);
+        }
+        
+        .project-card .project-lead {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+        
+        .project-card .project-lead i {
+            color: var(--gold);
+            width: 16px;
+        }
+        
+        .project-card .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin: 6px 0 10px;
+        }
+        
+        .project-card .project-tech .tech-tag {
+            background: var(--light-gray);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+        
+        .project-card .project-description {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .project-card .project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 12px;
+            border-top: 1px solid var(--medium-gray);
+        }
+        
+        .project-card .project-footer .team-count {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+        
+        .project-card .project-footer .team-count i {
+            color: var(--gold);
+        }
+        
+        .btn-join {
+            background: var(--gold);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn-join:hover {
+            background: var(--gold-dark);
+            color: #fff;
+        }
+        
+        .btn-join.joined {
+            background: #27ae60;
+        }
+        
+        .btn-join:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .filter-bar .filter-btn {
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 2px solid var(--medium-gray);
+            background: transparent;
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .filter-bar .filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+        
+        .filter-bar .filter-btn.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #fff;
+        }
+        
+        .admin-only {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .page-container { padding: 15px 12px; }
+            .page-header h2 { font-size: 1.3rem; }
+            .filter-bar { gap: 6px; }
+            .filter-bar .filter-btn { font-size: 0.7rem; padding: 4px 12px; }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .project-card .project-footer { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP NAVIGATION (Shared)
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="nav-container">
+        <a href="dashboard.html" class="brand">
+            <img src="images/UAI4Dlogo.png" alt="UAI4D Logo" class="brand-logo">
+            <span class="brand-text">UAI4D <span>Club</span> <small>UDOM</small></span>
+        </a>
+        <div class="nav-right">
+            <div class="user-info">
+                <div class="profile-dropdown">
+                    <div class="user-avatar" id="userAvatar" title="My Profile">M</div>
+                    <div class="dropdown-menu" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="name" id="dropdownName">Member</div>
+                            <div class="email" id="dropdownEmail">member@uai4d.com</div>
+                        </div>
+                        <a href="profile.html" class="dropdown-item"><i class="fas fa-user-circle"></i> My Profile</a>
+                        <a href="profile.html#changePassword" class="dropdown-item"><i class="fas fa-key"></i> Change Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="LoginServlet" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                <span class="user-name">Welcome, <span id="userFullName">Member</span></span>
+                <span class="user-role" id="userRole">MEMBER</span>
+                <a href="LoginServlet" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     PAGE CONTENT
+     ============================================================ -->
+<div class="page-container">
+
+    <div class="page-header">
+        <div>
+            <h2><i class="fas fa-project-diagram"></i> AI Projects</h2>
+            <div class="subtitle">Collaborate on AI projects and make an impact</div>
+        </div>
+        <div>
+            <a href="dashboard.html" class="btn-outline-gold me-2">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <a href="create-project.html" class="btn-gold admin-only" id="createProjectBtn">
+                <i class="fas fa-plus"></i> New Project
+            </a>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="idea">Ideas</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="paused">Paused</button>
+    </div>
+
+    <div class="row g-4" id="projectsContainer">
+        <div class="col-12 text-center py-5" id="projectsLoading">
+            <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--gold);"></i>
+            <p class="mt-2 text-muted">Loading projects...</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== Join Modal ===== -->
+<div class="modal fade" id="joinModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background: var(--white); border-radius: var(--radius);">
+            <div class="modal-header" style="border-bottom: 2px solid var(--gold);">
+                <h5 class="modal-title" style="font-weight: 700;">
+                    <i class="fas fa-users" style="color: var(--gold);"></i> Join Project
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to join:</p>
+                <h6 id="joinProjectTitle" style="color: var(--gold); font-weight: 700;"></h6>
+                <p class="text-muted" id="joinProjectLead"></p>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid var(--medium-gray);">
+                <button type="button" class="btn-outline-gold" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-gold" id="confirmJoinBtn">
+                    <i class="fas fa-check"></i> Confirm Join
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     FOOTER (Shared)
+     ============================================================ -->
+<footer class="dashboard-footer">
+    <div class="footer-logo">
+        <img src="images/UAI4Dlogo.png" alt="UAI4D Logo">
+        <span>UAI4D <span>Club</span></span>
+    </div>
+    <p>
+        
+        &copy; 2026 UAI4D Club | UDOM Artificial Intelligence for Development v0.1
+    </p>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/navigation.js"></script>
+
+</body>
+</html>

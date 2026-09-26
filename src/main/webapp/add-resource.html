@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAI4D Club - Add Resource</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <!-- ===== Shared Navigation & Footer CSS ===== -->
+    <link rel="stylesheet" href="css/navigation-footer.css">
+    
+    <style>
+        :root {
+            --primary-dark: #0a1628;
+            --primary-navy: #132044;
+            --primary-blue: #1a2a5e;
+            --gold: #D4AF37;
+            --gold-light: #E8D57A;
+            --gold-dark: #B8960F;
+            --white: #FFFFFF;
+            --light-gray: #f0f2f5;
+            --medium-gray: #e4e7ec;
+            --dark-gray: #6B7280;
+            --text-dark: #111827;
+            --text-gray: #4B5563;
+            --text-light: #9CA3AF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 24px;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+        
+        .page-header h2 {
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+        }
+        
+        .page-header h2 i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+        
+        .page-header .subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            transition: var(--transition);
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            color: #fff;
+        }
+        
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline-gold:hover {
+            background: var(--gold);
+            color: #fff;
+        }
+        
+        .btn-outline-danger {
+            background: transparent;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline-danger:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+        
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+        }
+        
+        .form-card .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        
+        .form-card .card-title i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+        
+        .form-group .form-control {
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .form-group .form-control:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+        }
+        
+        .form-group .form-control.is-valid {
+            border-color: #27ae60;
+        }
+        
+        .form-group .form-control.is-invalid {
+            border-color: #e74c3c;
+        }
+        
+        .form-group textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .alert-container {
+            margin-bottom: 16px;
+        }
+        
+        .alert-custom {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border-left: 4px solid;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .alert-custom.alert-success {
+            background: #EAFAF1;
+            color: #1A7A4A;
+            border-color: #27ae60;
+        }
+        
+        .alert-custom.alert-danger {
+            background: #FDEDEC;
+            color: #922B21;
+            border-color: #e74c3c;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .page-container { padding: 15px 12px; }
+            .page-header h2 { font-size: 1.3rem; }
+            .form-card { padding: 20px 16px; }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP NAVIGATION (Shared)
+     ============================================================ -->
+<nav class="top-nav">
+    <div class="nav-container">
+        <a href="dashboard.html" class="brand">
+            <img src="images/UAI4Dlogo.png" alt="UAI4D Logo" class="brand-logo">
+            <span class="brand-text">UAI4D <span>Club</span> <small>UDOM</small></span>
+        </a>
+        <div class="nav-right">
+            <div class="user-info">
+                <div class="profile-dropdown">
+                    <div class="user-avatar" id="userAvatar" title="Admin Panel">A</div>
+                    <div class="dropdown-menu" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="name" id="dropdownName">Admin</div>
+                            <div class="email" id="dropdownEmail">admin@uai4d.com</div>
+                        </div>
+                        <a href="dashboard.html" class="dropdown-item"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="admin.html" class="dropdown-item"><i class="fas fa-users-cog"></i> Admin Panel</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="LoginServlet" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                <span class="user-name">Admin, <span id="userFullName">Administrator</span></span>
+                <span class="user-role" id="userRole">ADMIN</span>
+                <a href="LoginServlet" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     PAGE CONTENT
+     ============================================================ -->
+<div class="page-container">
+
+    <!-- ===== Page Header ===== -->
+    <div class="page-header">
+        <div>
+            <h2><i class="fas fa-book-open"></i> Add Resource</h2>
+            <div class="subtitle">Add a new learning resource for members</div>
+        </div>
+        <div>
+            <a href="resources.html" class="btn-outline-gold">
+                <i class="fas fa-arrow-left"></i> Back to Resources
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== Alert Container ===== -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <!-- ===== Form ===== -->
+    <div class="form-card">
+        <div class="card-title"><i class="fas fa-book-open"></i> Resource Details</div>
+        <form id="addResourceForm" novalidate>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="title">Resource Title <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               placeholder="Enter resource title" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="resourceType">Type <span class="required">*</span></label>
+                        <select class="form-control" id="resourceType" name="resourceType" required>
+                            <option value="">Select type...</option>
+                            <option value="TUTORIAL">Tutorial</option>
+                            <option value="VIDEO">Video</option>
+                            <option value="ARTICLE">Article</option>
+                            <option value="PDF">PDF</option>
+                            <option value="GITHUB">GitHub</option>
+                            <option value="EXTERNAL_LINK">External Link</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description <span class="required">*</span></label>
+                <textarea class="form-control" id="description" name="description" 
+                          placeholder="Describe the resource" required></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="resourceUrl">Resource URL <span class="required">*</span></label>
+                        <input type="url" class="form-control" id="resourceUrl" name="resourceUrl" 
+                               placeholder="https://..." required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <input type="text" class="form-control" id="category" name="category" 
+                               placeholder="e.g., Python, AI, Data Science">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="isPremium" name="isPremium">
+                    <label class="form-check-label" for="isPremium">
+                        Premium Resource (Members only)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-gold" id="submitBtn">
+                    <i class="fas fa-save"></i> Add Resource
+                </button>
+                <button type="reset" class="btn-outline-danger">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+                <a href="resources.html" class="btn-outline-gold">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<!-- ============================================================
+     FOOTER (Shared)
+     ============================================================ -->
+<footer class="dashboard-footer">
+    <div class="footer-logo">
+        <img src="images/UAI4Dlogo.png" alt="UAI4D Logo">
+        <span>UAI4D <span>Club</span></span>
+    </div>
+    <p>
+         
+        &copy; 2026 UAI4D Club | UDOM Artificial Intelligence for Development v0.1
+    </p>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/add-resource.js"></script>
+<script src="js/navigation.js"></script>
+
+</body>
+</html>

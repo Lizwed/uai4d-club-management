@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAI4D Club - Login</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* ============================================================
+           LOGIN PAGE STYLES - Milky/Off-White Background
+           ============================================================ */
+        :root {
+            --milky-white: #F5F0E8;
+            --off-white: #FAF8F5;
+            --pure-white: #FFFFFF;
+            --gold: #D4AF37;
+            --gold-light: #E8D57A;
+            --gold-dark: #B8960F;
+            --dark-navy: #1A1A2E;
+            --text-dark: #2D2D2D;
+            --text-gray: #6B6B6B;
+            --text-light: #9B9B9B;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--milky-white);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            position: relative;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .login-card {
+            background: var(--pure-white);
+            border-radius: var(--border-radius);
+            padding: 40px 35px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===== Logo ===== */
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo .logo-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+            border: 2px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .logo h1 {
+            color: var(--dark-navy);
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo h1 span {
+            color: var(--gold);
+        }
+
+        .logo .subtitle {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-top: 2px;
+        }
+
+        .gold-divider {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            width: 60px;
+            margin: 10px auto 25px;
+        }
+
+        /* ===== Form Elements ===== */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+
+        .form-group .form-control {
+            background: var(--off-white);
+            border: 2px solid #E8E4DE;
+            color: var(--text-dark);
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group .form-control:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+            background: var(--pure-white);
+        }
+
+        .form-group .form-control::placeholder {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .form-group .form-control.is-valid {
+            border-color: #27ae60;
+        }
+
+        .form-group .form-control.is-invalid {
+            border-color: #e74c3c;
+        }
+
+        /* ===== Password Wrapper ===== */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 44px;
+        }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        .password-wrapper .toggle-password:hover {
+            color: var(--gold);
+        }
+
+        /* ===== Show Password Checkbox ===== */
+        .show-password-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0 18px;
+        }
+
+        .show-password-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+
+        .show-password-group label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        /* ===== Remember Me ===== */
+        .remember-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .remember-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--gold);
+            cursor: pointer;
+        }
+
+        .remember-group label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        /* ===== Login Button ===== */
+        .btn-login {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.35);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== Loading Spinner with Logo ===== */
+        .btn-login .btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-login .btn-content .btn-text {
+            display: inline;
+        }
+
+        .btn-login .btn-content .loader {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-login .btn-content .loader .loader-logo {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        .btn-login .btn-content .loader .loader-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .btn-login .btn-content .loader .loader-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .btn-login.loading .btn-content .btn-text {
+            display: none;
+        }
+
+        .btn-login.loading .btn-content .loader {
+            display: flex;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ===== Register Link ===== */
+        .register-link {
+            text-align: center;
+            margin-top: 18px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .register-link a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .register-link a:hover {
+            color: var(--gold-dark);
+            text-decoration: underline;
+        }
+
+        /* ===== Alert ===== */
+        .alert-container {
+            margin-bottom: 18px;
+        }
+
+        .alert-custom {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            border-left: 4px solid;
+            animation: slideDown 0.4s ease;
+        }
+
+        .alert-custom.alert-success {
+            background: #EAFAF1;
+            color: #1A7A4A;
+            border-color: #27ae60;
+        }
+
+        .alert-custom.alert-danger {
+            background: #FDEDEC;
+            color: #922B21;
+            border-color: #e74c3c;
+        }
+
+        .alert-custom.alert-info {
+            background: #EBF5FB;
+            color: #1A5276;
+            border-color: #3498db;
+        }
+
+        /* ===== Footer ===== */
+        .footer-text {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.7rem;
+            color: var(--text-light);
+        }
+
+        .footer-text i {
+            color: var(--gold);
+        }
+
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 576px) {
+            .login-card {
+                padding: 28px 22px;
+                border-radius: 12px;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo .logo-img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .form-group .form-control {
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            .btn-login {
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .login-card {
+                padding: 20px 16px;
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================
+     FULL PAGE LOADER (Centered with Logo)
+     ============================================================ -->
+<div id="pageLoader" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #F5F0E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
+    gap: 20px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+">
+    <div style="
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #D4AF37, #E8D57A);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+        animation: pulseLoader 1.5s ease-in-out infinite;
+    ">
+        <img src="images/UAI4Dlogo.png" alt="UAI4D Logo" style="
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+        ">
+    </div>
+    <div style="
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    ">
+        <div style="
+            width: 12px;
+            height: 12px;
+            background: #D4AF37;
+            border-radius: 50%;
+            animation: dotBounce 1.4s ease-in-out infinite 0s;
+        "></div>
+        <div style="
+            width: 12px;
+            height: 12px;
+            background: #D4AF37;
+            border-radius: 50%;
+            animation: dotBounce 1.4s ease-in-out infinite 0.2s;
+        "></div>
+        <div style="
+            width: 12px;
+            height: 12px;
+            background: #D4AF37;
+            border-radius: 50%;
+            animation: dotBounce 1.4s ease-in-out infinite 0.4s;
+        "></div>
+    </div>
+    <p style="
+        color: rgba(26, 26, 46, 0.5);
+        font-size: 0.85rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-top: 5px;
+    ">Loading...</p>
+</div>
+
+<style>
+    @keyframes pulseLoader {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.3);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 0 100px rgba(212, 175, 55, 0.5);
+        }
+    }
+    @keyframes dotBounce {
+        0%, 80%, 100% {
+            transform: scale(0.6);
+            opacity: 0.3;
+        }
+        40% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+</style>
+
+<!-- ============================================================
+     LOGIN CONTENT
+     ============================================================ -->
+<div class="login-container">
+    <div class="login-card">
+
+        <!-- ===== Logo ===== -->
+        <div class="logo">
+            <img src="images/UAI4Dlogo.png" alt="UAI4D Logo" class="logo-img">
+            <h1>UAI4D <span>Club</span></h1>
+            <p class="subtitle">UDOM Artificial Intelligence for Development</p>
+            <hr class="gold-divider">
+        </div>
+
+        <!-- ===== Alert Container ===== -->
+        <div class="alert-container" id="alertContainer"></div>
+
+        <!-- ===== Login Form ===== -->
+        <form id="loginForm" novalidate>
+
+            <!-- Username or Email -->
+            <div class="form-group">
+                <label for="username">Username or Email <span class="required">*</span></label>
+                <input type="text" class="form-control" id="username" name="username" 
+                       placeholder="Enter your username or email" required autocomplete="username">
+                <div class="invalid-feedback">Please enter your username or email</div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password <span class="required">*</span></label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Enter your password" required autocomplete="current-password">
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="invalid-feedback">Please enter your password</div>
+            </div>
+
+            <!-- Show Password -->
+            <div class="show-password-group">
+                <input type="checkbox" id="showPassword">
+                <label for="showPassword">Show Password</label>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="remember-group">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Remember me</label>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-login" id="loginBtn">
+                <span class="btn-content">
+                    <span class="btn-text"><i class="fas fa-sign-in-alt"></i> Sign In</span>
+                    <span class="loader">
+                        <span class="loader-logo"><i class="fas fa-robot"></i></span>
+                        <span class="loader-spinner"></span>
+                        <span class="loader-text">Signing in...</span>
+                    </span>
+                </span>
+            </button>
+
+        </form>
+
+        <!-- ===== Register Link ===== -->
+        <div class="register-link">
+            Don't have an account? <a href="register.html">Create one</a>
+        </div>
+
+        <!-- ===== Footer ===== -->
+        <div class="footer-text">
+            <i class="fas fa-shield-alt"></i> Your data is secure with us
+        </div>
+
+    </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/login.js"></script>
+
+<script>
+    // ============================================================
+    // HIDE PAGE LOADER AFTER PAGE LOADS
+    // ============================================================
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            var loader = document.getElementById('pageLoader');
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+        }, 800);
+    });
+</script>
+
+</body>
+</html>

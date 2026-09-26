@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAI4D Club - Register</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-container">
+    
+    <div class="auth-card">
+        
+        <!-- Logo with Image -->
+        <div class="logo">
+            <img src="images/UAI4Dlogo.png" alt="UAI4D Logo" style="width: 70px; height: 70px; border-radius: 50%; margin-bottom: 12px; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);">
+            <h1>UAI4D <span>Club</span></h1>
+            <p class="subtitle">UDOM Artificial Intelligence for Development</p>
+        </div>
+        
+        <!-- Alert Container -->
+        <div class="alert-container" id="alertContainer"></div>
+        
+        <!-- Registration Form -->
+        <form id="registerForm" action="RegisterServlet" method="POST" novalidate>
+            
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fullName">Full Name <span class="required">*</span></label>
+                <input type="text" class="form-control" id="fullName" name="fullName" 
+                       placeholder="Enter your full name" required 
+                       autocomplete="name" minlength="2" maxlength="100">
+                <div class="invalid-feedback">Please enter your full name</div>
+            </div>
+            
+            <!-- Username -->
+            <div class="form-group">
+                <label for="username">Username <span class="required">*</span></label>
+                <input type="text" class="form-control" id="username" name="username" 
+                       placeholder="Choose a unique username" required 
+                       autocomplete="username" minlength="3" maxlength="50" 
+                       pattern="[a-zA-Z0-9_]{3,50}">
+                <div id="usernameAvailability" class="availability-msg"></div>
+                <div class="invalid-feedback">Username must be 3-50 characters (letters, numbers, underscores)</div>
+            </div>
+            
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email Address <span class="required">*</span></label>
+                <input type="email" class="form-control" id="email" name="email" 
+                       placeholder="Enter your email address" required 
+                       autocomplete="email" maxlength="100">
+                <div class="invalid-feedback">Please enter a valid email address</div>
+            </div>
+            
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password <span class="required">*</span></label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Create a strong password" required 
+                           autocomplete="new-password" minlength="8" maxlength="100">
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+            </div>
+            
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password <span class="required">*</span></label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" 
+                       placeholder="Confirm your password" required autocomplete="new-password">
+                <div id="passwordMatchMsg" class="match-msg"></div>
+                <div class="invalid-feedback">Passwords do not match</div>
+            </div>
+            
+            <!-- Year of Study -->
+            <div class="form-group">
+                <label for="yearOfStudy">Year of Study</label>
+                <select class="form-control" id="yearOfStudy" name="yearOfStudy">
+                    <option value="">Select year...</option>
+                    <option value="1">Year 1</option>
+                    <option value="2">Year 2</option>
+                    <option value="3">Year 3</option>
+                    <option value="4">Year 4</option>
+                </select>
+            </div>
+            
+            <!-- Terms and Conditions -->
+            <div class="form-group" style="margin-bottom: 20px;">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" name="termsCheck" required>
+                    <label class="form-check-label" for="termsCheck" style="font-size:0.85rem; color: var(--text-gray);">
+                        I agree to the <a href="terms-of-service.html" target="_blank" style="color: var(--gold);">Terms of Service</a> and 
+                        <a href="privacy-policy.html" target="_blank" style="color: var(--gold);">Privacy Policy</a>
+                    </label>
+                    <div class="invalid-feedback">You must agree to the terms</div>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary" id="registerBtn">
+                <span class="btn-text"><i class="fas fa-user-plus"></i> Create Account</span>
+                <span class="spinner-border spinner-border-sm spinner" role="status" aria-hidden="true"></span>
+            </button>
+            
+        </form>
+        
+        <!-- Login Link -->
+        <div class="auth-links">
+            Already have an account? <a href="login.html">Sign in</a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer-text">
+            <i class="fas fa-shield-alt"></i> Your data is secure with us
+        </div>
+        
+    </div>
+    
+</div>
+
+<!-- ============================================ -->
+<!-- SCRIPTS                                      -->
+<!-- ============================================ -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/register.js"></script>
+
+</body>
+</html>

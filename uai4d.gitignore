@@ -1,0 +1,31 @@
+# NetBeans
+build/
+dist/
+nbproject/private/
+nbbuild/
+nbdist/
+.gradle/
+nb-configuration.xml
+
+# Maven
+target/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Secrets / local DB config
+.env
+*.env
+src/main/resources/db.properties

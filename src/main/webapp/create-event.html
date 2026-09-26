@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAI4D Club - Create Event</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <style>
+        :root {
+            --primary-dark: #0a1628;
+            --primary-navy: #132044;
+            --primary-blue: #1a2a5e;
+            --gold: #D4AF37;
+            --gold-light: #E8D57A;
+            --gold-dark: #B8960F;
+            --white: #FFFFFF;
+            --light-gray: #f0f2f5;
+            --medium-gray: #e4e7ec;
+            --dark-gray: #6B7280;
+            --text-dark: #111827;
+            --text-gray: #4B5563;
+            --text-light: #9CA3AF;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 24px;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+        
+        .page-header h2 {
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 0;
+        }
+        
+        .page-header h2 i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+        
+        .page-header .subtitle {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            transition: var(--transition);
+        }
+        
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            color: #fff;
+        }
+        
+        .btn-outline-gold {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline-gold:hover {
+            background: var(--gold);
+            color: #fff;
+        }
+        
+        .btn-outline-danger {
+            background: transparent;
+            color: #dc2626;
+            border: 2px solid #dc2626;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 8px 20px;
+            transition: var(--transition);
+        }
+        
+        .btn-outline-danger:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+        
+        .form-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
+        }
+        
+        .form-card .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        
+        .form-card .card-title i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        
+        .form-group label .required {
+            color: #e74c3c;
+            margin-left: 2px;
+        }
+        
+        .form-group .form-control {
+            border: 2px solid var(--medium-gray);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .form-group .form-control:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+        }
+        
+        .form-group .form-control.is-valid {
+            border-color: #27ae60;
+        }
+        
+        .form-group .form-control.is-invalid {
+            border-color: #e74c3c;
+        }
+        
+        .form-group textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group .form-hint {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 3px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .alert-container {
+            margin-bottom: 16px;
+        }
+        
+        .alert-custom {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border-left: 4px solid;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .alert-custom.alert-success {
+            background: #EAFAF1;
+            color: #1A7A4A;
+            border-color: #27ae60;
+        }
+        
+        .alert-custom.alert-danger {
+            background: #FDEDEC;
+            color: #922B21;
+            border-color: #e74c3c;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== TOP NAVIGATION ===== */
+        .top-nav {
+            background: var(--primary-dark);
+            padding: 0;
+            border-bottom: 3px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-nav .nav-container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+
+        /* Same UAI4D logo as the Admin page.
+           Keep branding on the left and profile controls on the right. */
+        .top-nav .brand {
+            margin-right: auto;
+            min-width: 0;
+            flex-shrink: 1;
+        }
+
+        .top-nav .nav-right {
+            margin-left: auto;
+            justify-content: flex-end;
+            min-width: 0;
+            flex-shrink: 0;
+        }
+
+        .top-nav .user-info {
+            justify-content: flex-end;
+            flex-shrink: 0;
+        }
+
+        .top-nav .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .top-nav .brand .brand-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .top-nav .brand .brand-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .top-nav .brand .brand-text span {
+            color: var(--gold);
+        }
+
+        .top-nav .brand .brand-text small {
+            font-size: 0.55rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-left: 4px;
+        }
+
+        .top-nav .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .top-nav .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-dropdown .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .profile-dropdown .user-avatar:hover {
+            transform: scale(1.08);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .profile-dropdown .dropdown-menu {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            min-width: 200px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--medium-gray);
+            padding: 8px 0;
+            display: none;
+            z-index: 1000;
+            animation: fadeInDown 0.3s ease;
+        }
+
+        .profile-dropdown .dropdown-menu.show {
+            display: block;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-header {
+            padding: 10px 16px 8px;
+            border-bottom: 1px solid var(--medium-gray);
+            margin-bottom: 4px;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-header .name {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-header .email {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-item {
+            padding: 10px 16px;
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-item:hover {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-item i {
+            width: 20px;
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-divider {
+            height: 1px;
+            background: var(--medium-gray);
+            margin: 4px 0;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-item.text-danger {
+            color: #dc2626;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-item.text-danger:hover {
+            background: rgba(220, 38, 38, 0.08);
+            color: #dc2626;
+        }
+
+        .profile-dropdown .dropdown-menu .dropdown-item.text-danger i {
+            color: #dc2626;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-nav .user-name {
+            display: none;
+        }
+
+        .top-nav .user-role {
+            background: rgba(212, 175, 55, 0.15);
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            color: var(--gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .top-nav .logout-btn {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.75rem;
+            padding: 5px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-nav .logout-btn:hover {
+            color: #ff6b6b;
+            border-color: rgba(255,107,107,0.3);
+            background: rgba(255,107,107,0.08);
+        }
+
+        @media (max-width: 768px) {
+            .page-container { padding: 15px 12px; }
+            .page-header h2 { font-size: 1.3rem; }
+            .form-card { padding: 20px 16px; }
+            .top-nav .nav-container {
+                width: 100%;
+                padding: 8px 12px;
+                gap: 8px;
+            }
+
+            .top-nav .brand {
+                margin-right: auto;
+                gap: 7px;
+                min-width: 0;
+            }
+
+            .top-nav .brand .brand-text {
+                font-size: 1rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .top-nav .brand .brand-text small { display: none; }
+            .top-nav .brand .brand-logo { width: 30px; height: 30px; }
+
+            .top-nav .nav-right {
+                margin-left: auto;
+                flex-shrink: 0;
+            }
+
+            .top-nav .user-info {
+                gap: 7px;
+            }
+
+            .top-nav .user-name { display: none; }
+
+            .top-nav .profile-dropdown .dropdown-menu {
+                right: 0;
+                max-width: calc(100vw - 20px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-header { flex-direction: column; align-items: flex-start; }
+            .form-actions { flex-direction: column; }
+            .form-actions .btn { width: 100%; }
+
+            .top-nav .nav-container {
+                padding: 6px 10px;
+                gap: 5px;
+            }
+
+            .top-nav .brand {
+                gap: 5px;
+            }
+
+            .top-nav .brand .brand-logo {
+                width: 26px;
+                height: 26px;
+            }
+
+            .top-nav .brand .brand-text {
+                font-size: 0.78rem;
+            }
+
+            .top-nav .nav-right {
+                margin-left: auto;
+            }
+
+            .top-nav .user-info {
+                gap: 5px;
+            }
+
+            .top-nav .user-role {
+                font-size: 0.45rem;
+                padding: 1px 6px;
+            }
+
+            .top-nav .logout-btn {
+                font-size: 0.6rem;
+                padding: 3px 7px;
+            }
+
+            .profile-dropdown .user-avatar {
+                width: 28px;
+                height: 28px;
+                font-size: 0.65rem;
+            }
+
+            .profile-dropdown .dropdown-menu {
+                right: 0;
+                min-width: 150px;
+                max-width: calc(100vw - 12px);
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 360px) {
+            .top-nav .brand .brand-text {
+                font-size: 0.68rem;
+            }
+
+            .top-nav .user-role {
+                display: none;
+            }
+
+            .top-nav .logout-btn {
+                padding: 3px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== TOP NAVIGATION ===== -->
+<nav class="top-nav">
+    <div class="nav-container">
+        <a href="dashboard.html" class="brand">
+            <img src="images/UAI4Dlogo.png" alt="UAI4D Logo" class="brand-logo">
+            <span class="brand-text">UAI4D <span>Club</span> <small>UDOM</small></span>
+        </a>
+        <div class="nav-right">
+            <div class="user-info">
+                <div class="profile-dropdown">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="dropdown-menu" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <div class="name" id="dropdownName">Admin</div>
+                            <div class="email" id="dropdownEmail">admin@uai4d.com</div>
+                        </div>
+                        <a href="dashboard.html" class="dropdown-item"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="admin.html" class="dropdown-item"><i class="fas fa-users-cog"></i> Admin Panel</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="LoginServlet" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+                <span class="user-name">Admin, <span id="userFullName">Administrator</span></span>
+                <span class="user-role" id="userRole">ADMIN</span>
+                <a href="LoginServlet" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     PAGE CONTENT
+     ============================================================ -->
+<div class="page-container">
+
+    <!-- ===== Page Header ===== -->
+    <div class="page-header">
+        <div>
+            <h2><i class="fas fa-calendar-plus"></i> Create Event</h2>
+            <div class="subtitle">Add a new event to the club calendar</div>
+        </div>
+        <div>
+            <a href="events.html" class="btn-outline-gold">
+                <i class="fas fa-arrow-left"></i> Back to Events
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== Alert Container ===== -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <!-- ===== Form ===== -->
+    <div class="form-card">
+        <div class="card-title"><i class="fas fa-calendar-plus"></i> Event Details</div>
+        <form id="createEventForm" novalidate>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="title">Event Title <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               placeholder="Enter event title" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="eventType">Event Type <span class="required">*</span></label>
+                        <select class="form-control" id="eventType" name="eventType" required>
+                            <option value="">Select type...</option>
+                            <option value="WORKSHOP">Workshop</option>
+                            <option value="TUTORIAL">Tutorial</option>
+                            <option value="MEETUP">Meetup</option>
+                            <option value="HACKATHON">Hackathon</option>
+                            <option value="GUEST_SPEAKER">Guest Speaker</option>
+                            <option value="SOCIAL">Social</option>
+                            <option value="WEBINAR">Webinar</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description <span class="required">*</span></label>
+                <textarea class="form-control" id="description" name="description" 
+                          placeholder="Describe the event" required></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="eventDate">Event Date <span class="required">*</span></label>
+                        <input type="datetime-local" class="form-control" id="eventDate" name="eventDate" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="location">Location <span class="required">*</span></label>
+                        <input type="text" class="form-control" id="location" name="location" 
+                               placeholder="e.g., Computer Lab 301, Online (Zoom)" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="maxAttendees">Maximum Attendees</label>
+                        <input type="number" class="form-control" id="maxAttendees" name="maxAttendees" 
+                               placeholder="50" value="50" min="1">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="UPCOMING">Upcoming</option>
+                            <option value="ONGOING">Ongoing</option>
+                            <option value="COMPLETED">Completed</option>
+                            <option value="CANCELLED">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-gold" id="submitBtn">
+                    <i class="fas fa-save"></i> Create Event
+                </button>
+                <button type="reset" class="btn-outline-danger">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+                <a href="events.html" class="btn-outline-gold">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/create-event.js"></script>
+
+</body>
+</html>
